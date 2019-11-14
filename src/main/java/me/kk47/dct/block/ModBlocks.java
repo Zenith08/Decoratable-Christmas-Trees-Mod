@@ -3,6 +3,8 @@ package me.kk47.dct.block;
 import me.kk47.dct.DChristmasTrees;
 import me.kk47.dct.client.render.RenderChristmasTree;
 import me.kk47.dct.te.TileEntityChristmasTreeNormal;
+import me.kk47.dct.te.TileEntityChristmasTreeTrains;
+import me.kk47.modeltrains.client.render.RenderTrackbed;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
