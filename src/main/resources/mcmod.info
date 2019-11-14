@@ -1,0 +1,16 @@
+[
+{
+  "modid": "christmastrees",
+  "name": "Decoratable Christmas Trees",
+  "description": "The new DCM Mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Zenith08", "CyberGamerX"],
+  "credits": "Zenith08 - Author, CyberGamerX - Artist",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
