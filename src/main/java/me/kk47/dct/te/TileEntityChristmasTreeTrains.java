@@ -1,12 +1,9 @@
 package me.kk47.dct.te;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
-import me.kk47.dct.DChristmasTrees;
-import me.kk47.dct.client.models.ModelChristmasTree;
+import me.kk47.dct.network.TPacketTrainChangeDirection;
+import me.kk47.dct.network.TPacketTrainChangeSpeed;
 import me.kk47.modeltrains.api.IItemModelTrack;
 import me.kk47.modeltrains.api.IItemTrain;
 import me.kk47.modeltrains.api.ITileEntityTrackContainer;
@@ -17,14 +14,11 @@ import me.kk47.modeltrains.math.MathHelper;
 import me.kk47.modeltrains.math.Position3F;
 import me.kk47.modeltrains.tileentity.TileEntityTrainController;
 import me.kk47.modeltrains.train.RollingStock;
-import me.kk47.ueri.UERIRenderable;
-import me.kk47.ueri.UERITechne;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 
@@ -45,7 +39,7 @@ public class TileEntityChristmasTreeTrains extends TileEntityChristmasTreeNormal
 
 	@Override
 	public int getSizeInventory() {
-		return 4;
+		return 9;
 	}
 
 	public static final int BLOCK_OFFSET = 32;
@@ -246,7 +240,7 @@ public class TileEntityChristmasTreeTrains extends TileEntityChristmasTreeNormal
 		for(int i = 0; i < trains.length; i++){
 			RollingStock r = trains[i];
 
-			if(getStackInSlot(7-i) !=null && getStackInSlot(7-i).getItem() instanceof IItemTrain){
+			if(getStackInSlot(7-i) != ItemStack.EMPTY && getStackInSlot(7-i).getItem() instanceof IItemTrain){
 				r.setTrainItem((IItemTrain) getStackInSlot(7-i).getItem());
 				hasTrainWithItem = true;
 			}else{
@@ -267,30 +261,30 @@ public class TileEntityChristmasTreeTrains extends TileEntityChristmasTreeNormal
 	public boolean hasTrain(){
 		boolean out = false;
 		for(int i = 0; i < 4; i++){
-			if(getStackInSlot(7-i) != null)
+			if(getStackInSlot(7-i) != ItemStack.EMPTY)
 				out = true;
 		}
 		return out;
 	}
 
 	//Packet Handling ----------------------------------------------------
-	/*	TPacketChangeTrainSpeed lastPacket;
-	public synchronized void handleTrainSpeedPacket(TPacketChangeTrainSpeed packet){
+	TPacketTrainChangeSpeed lastPacket;
+	public synchronized void handleTrainSpeedPacket(TPacketTrainChangeSpeed packet){
 		lastPacket = packet;
-//		System.out.println("Packet recieved and handled");
+		//		System.out.println("Packet recieved and handled");
 		((WorldServer) world).addScheduledTask(new Runnable() {
 			@Override
 			public void run() {
 				if(hasValidLoco()){
-//					System.out.println("Set field based on packet");
+					//					System.out.println("Set field based on packet");
 					setField(0, lastPacket.getNewSpeed());
 				}
 			}
 		});
 	}
 
-		TPacketChangeTrainDirection lastDirPacket;
-	public synchronized void handleTrainDirectionPacket(TPacketChangeTrainDirection message) {
+	TPacketTrainChangeDirection lastDirPacket;
+	public synchronized void handleTrainDirectionPacket(TPacketTrainChangeDirection message) {
 		lastDirPacket = message;
 		((WorldServer) world).addScheduledTask(new Runnable() {
 			@Override
@@ -304,7 +298,7 @@ public class TileEntityChristmasTreeTrains extends TileEntityChristmasTreeNormal
 				}
 			}
 		});
-	}*/
+	}
 
 	/* (non-Javadoc)
 	 * @see me.kk47.modeltrains.tileentity.ITileEntityTrainContainer#hasValidLoco()

@@ -1,8 +1,11 @@
 package me.kk47.dct;
 
 import me.kk47.dct.gui.DCTGuiHandling;
+import me.kk47.dct.network.TPacketTrainChangeDirection;
+import me.kk47.dct.network.TPacketTrainChangeSpeed;
 import me.kk47.dct.worldgen.CTWorldGeneration;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -11,7 +14,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid=DChristmasTrees.MODID, version=DChristmasTrees.VERSION, name=DChristmasTrees.NAME)
 public class DChristmasTrees {
@@ -28,10 +33,9 @@ public class DChristmasTrees {
 	@SidedProxy(clientSide = "me.kk47.dct.client.ClientProxy", serverSide = "me.kk47.dct.server.ServerProxy")
 	public static CommonProxy proxy;
 	
-	CTWorldGeneration treeGeneration;
+	public static SimpleNetworkWrapper packetHandler;
 	
-	//TODO World Gen
-	//TODO Lang File
+	CTWorldGeneration treeGeneration;
 	
 	@EventHandler
     public void preInit(FMLPreInitializationEvent e) {
@@ -47,13 +51,12 @@ public class DChristmasTrees {
     	NetworkRegistry.INSTANCE.registerGuiHandler(instance, new DCTGuiHandling());
     	
     	GameRegistry.registerWorldGenerator(treeGeneration, 0);
-    /*	MinecraftForge.EVENT_BUS.register(new CTEventHandler());
     	
     	packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel("trees");
-    	packetHandler.registerMessage(TPacketChangeTrainSpeed.Handler.class, TPacketChangeTrainSpeed.class, 0, Side.SERVER);
-    	packetHandler.registerMessage(TPacketChangeTrainDirection.HandlePacketChangeTrainDirection.class, TPacketChangeTrainDirection.class, 1, Side.SERVER);*/
+    	packetHandler.registerMessage(TPacketTrainChangeSpeed.Handler.class, TPacketTrainChangeSpeed.class, 0, Side.SERVER);
+    	packetHandler.registerMessage(TPacketTrainChangeDirection.HandlePacketChangeTrainDirection.class, TPacketTrainChangeDirection.class, 1, Side.SERVER);
     }
-        
+
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
     	proxy.postInit(e);

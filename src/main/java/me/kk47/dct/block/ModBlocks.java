@@ -1,10 +1,8 @@
 package me.kk47.dct.block;
 
 import me.kk47.dct.DChristmasTrees;
-import me.kk47.dct.client.render.RenderChristmasTree;
-import me.kk47.dct.te.TileEntityChristmasTreeNormal;
+import me.kk47.dct.client.render.RenderChristmasTreeTrains;
 import me.kk47.dct.te.TileEntityChristmasTreeTrains;
-import me.kk47.modeltrains.client.render.RenderTrackbed;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -20,12 +18,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModBlocks {
 
-	public static BlockChristmasTreeNormal normalTree;
+	public static BlockChristmasTreeTrains normalTree;
 	public static Item itemTree;
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
-		normalTree = new BlockChristmasTreeNormal();
+		normalTree = new BlockChristmasTreeTrains();
 		event.getRegistry().register(normalTree);
 	}
 	
@@ -36,12 +34,12 @@ public class ModBlocks {
 	}
 	
 	public static void registerTileEntities() {
-		GameRegistry.registerTileEntity(TileEntityChristmasTreeNormal.class, new ResourceLocation(DChristmasTrees.MODID, "christmastree-normal"));
+		GameRegistry.registerTileEntity(TileEntityChristmasTreeTrains.class, new ResourceLocation(DChristmasTrees.MODID, "christmastree-normal"));
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public static void clientInit() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChristmasTreeNormal.class, new RenderChristmasTree());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChristmasTreeTrains.class, new RenderChristmasTreeTrains());
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	    .register(itemTree, 0, new ModelResourceLocation(DChristmasTrees.MODID + ":" + "christmastree-normal", "inventory"));
 	}
