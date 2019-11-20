@@ -1,27 +1,23 @@
 package me.kk47.dct.client.render;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.lwjgl.opengl.GL11;
 
 import me.kk47.dct.api.IItemBobble;
 import me.kk47.dct.api.IItemDecoration;
 import me.kk47.dct.api.IItemTopper;
 import me.kk47.dct.item.ItemTrainset;
-import me.kk47.dct.te.TileEntityChristmasTree;
 import me.kk47.dct.te.TileEntityChristmasTreeTrains;
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.api.IItemModelTrack;
 import me.kk47.modeltrains.api.IItemTrain;
+import me.kk47.modeltrains.api.IItemTrainLoadable;
 import me.kk47.modeltrains.client.model.ModelDummyTrain;
 import me.kk47.modeltrains.tileentity.TileEntityTrainController;
 import me.kk47.modeltrains.train.RollingStock;
 import me.kk47.ueri.UERIRenderable;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -53,8 +49,18 @@ public class RenderChristmasTreeTrains extends TileEntitySpecialRenderer<TileEnt
 				for(int i = 0; i < trains.length; i++){
 					if(trains[i].getTrainItem() != null) {
 						IItemTrain it = trains[i].getTrainItem();
-						List<UERIRenderable> trainModels = it.getRenderables(te.getStackInSlot(4+i));
-						for(UERIRenderable renderable : trainModels) {
+						List<UERIRenderable> rendering = new ArrayList<UERIRenderable>();
+						rendering.addAll(it.getRenderables(te.getStackInSlot(7-i)));
+						
+						if(it instanceof IItemTrainLoadable) {
+							IItemTrainLoadable itl = (IItemTrainLoadable) it;
+							List<UERIRenderable> loadedOverrides = itl.getModelOverrides(trains[i].getLoadedResource().getName());
+							if(loadedOverrides != null) {
+								rendering.addAll(loadedOverrides);
+							}
+						}
+						
+						for(UERIRenderable renderable : rendering) {
 							renderTrain(te, x, y, z, renderable, 0.25F, trains[i].getPos().getX(), 0.0F, trains[i].getPos().getY(), trains[i].getPos().getYaw());
 						}
 					}
