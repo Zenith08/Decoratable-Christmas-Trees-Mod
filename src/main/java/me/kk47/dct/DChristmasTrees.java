@@ -23,7 +23,7 @@ public class DChristmasTrees {
 
 	public static final String MODID = "christmastrees";
 	public static final String NAME = "Decoratable Christmas Trees";
-	public static final String VERSION = "3.0";
+	public static final String VERSION = "4.0";
 	
 	@Instance
 	public static DChristmasTrees instance;
