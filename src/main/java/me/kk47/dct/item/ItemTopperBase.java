@@ -7,6 +7,7 @@ import me.kk47.dct.DChristmasTrees;
 import me.kk47.dct.api.IItemTopper;
 import me.kk47.dct.te.TileEntityChristmasTree;
 import me.kk47.dct.te.TileEntityChristmasTreeNormal;
+import me.kk47.ueri.UERIMod;
 import me.kk47.ueri.UERIRenderable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -19,11 +20,13 @@ public class ItemTopperBase extends Item implements IItemTopper {
 	private List<UERIRenderable> render;
 	
 	public ItemTopperBase(String registryName) {
-		render = new ArrayList<UERIRenderable>();
 		this.setRegistryName(registryName);
 		this.setUnlocalizedName(registryName);
 		this.setCreativeTab(DChristmasTrees.treeTab);
 		this.setMaxStackSize(1);
+		if(UERIMod.isClientSided) {
+			render = new ArrayList<UERIRenderable>();
+		}
 	}
 	
 	protected void addRenderable(UERIRenderable renderable) {
